@@ -2,7 +2,7 @@
 #
 # remirepo spec file for php-pecl-xattr
 #
-# Copyright (c) 2013-2016 Remi Collet
+# Copyright (c) 2013-2011 Remi Collet
 # License: CC-BY-SA
 # http://creativecommons.org/licenses/by-sa/4.0/
 #
@@ -16,6 +16,9 @@
 %if "%{scl}" == "rh-php70"
 %global sub_prefix sclo-php70-
 %endif
+%if "%{scl}" == "rh-php71"
+%global sub_prefix sclo-php71-
+%endif
 %scl_package      php-pecl-xattr
 %endif
 
@@ -26,13 +29,12 @@
 Summary:        Extended attributes
 Name:           %{?sub_prefix}php-pecl-%{pecl_name}
 Version:        1.3.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        PHP
 Group:          Development/Languages
 URL:            http://pecl.php.net/package/%{pecl_name}
 Source0:        http://pecl.php.net/get/%{pecl_name}-%{version}%{?prever}.tgz
 
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  %{?scl_prefix}php-devel
 BuildRequires:  %{?scl_prefix}php-pear
 
@@ -100,8 +102,6 @@ make %{?_smp_mflags}
 
 
 %install
-rm -rf %{buildroot}
-
 make -C NTS install INSTALL_ROOT=%{buildroot}
 
 # install config file
@@ -117,7 +117,6 @@ do install -Dpm 644 $i %{buildroot}%{pecl_docdir}/%{pecl_name}/$i
 done
 
 
-%if 0%{?fedora} < 24
 # when pear installed alone, after us
 %triggerin -- %{?scl_prefix}php-pear
 if [ -x %{__pecl} ] ; then
@@ -134,7 +133,6 @@ fi
 if [ $1 -eq 0 -a -x %{__pecl} ] ; then
     %{pecl_uninstall} %{pecl_name} >/dev/null || :
 fi
-%endif
 
 
 %check
@@ -162,6 +160,9 @@ REPORT_EXIT_STATUS=1 \
 
 
 %changelog
+* Thu Aug 10 2017 Remi Collet <remi@remirepo.net> - 1.3.0-2
+- change for sclo-php71
+
 * Fri Nov 11 2016 Remi Collet <remi@fedoraproject.org> - 1.3.0-1
 - cleanup for SCLo build
 
