@@ -2,7 +2,7 @@
 #
 # remirepo spec file for php-pecl-xattr
 #
-# Copyright (c) 2013-2011 Remi Collet
+# Copyright (c) 2013-2018 Remi Collet
 # License: CC-BY-SA
 # http://creativecommons.org/licenses/by-sa/4.0/
 #
@@ -10,14 +10,14 @@
 #
 %if 0%{?scl:1}
 %global sub_prefix sclo-%{scl_prefix}
-%if "%{scl}" == "rh-php56"
-%global sub_prefix sclo-php56-
-%endif
 %if "%{scl}" == "rh-php70"
 %global sub_prefix sclo-php70-
 %endif
 %if "%{scl}" == "rh-php71"
 %global sub_prefix sclo-php71-
+%endif
+%if "%{scl}" == "rh-php72"
+%global sub_prefix sclo-php72-
 %endif
 %scl_package      php-pecl-xattr
 %endif
@@ -29,7 +29,7 @@
 Summary:        Extended attributes
 Name:           %{?sub_prefix}php-pecl-%{pecl_name}
 Version:        1.3.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        PHP
 Group:          Development/Languages
 URL:            http://pecl.php.net/package/%{pecl_name}
@@ -160,6 +160,9 @@ REPORT_EXIT_STATUS=1 \
 
 
 %changelog
+* Thu Nov 15 2018 Remi Collet <remi@remirepo.net> - 1.3.0-3
+- build for sclo-php72
+
 * Thu Aug 10 2017 Remi Collet <remi@remirepo.net> - 1.3.0-2
 - change for sclo-php71
 
