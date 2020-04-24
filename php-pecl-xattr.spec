@@ -2,7 +2,7 @@
 #
 # remirepo spec file for php-pecl-xattr
 #
-# Copyright (c) 2013-2019 Remi Collet
+# Copyright (c) 2013-2020 Remi Collet
 # License: CC-BY-SA
 # http://creativecommons.org/licenses/by-sa/4.0/
 #
@@ -10,12 +10,6 @@
 #
 %if 0%{?scl:1}
 %global sub_prefix sclo-%{scl_prefix}
-%if "%{scl}" == "rh-php70"
-%global sub_prefix sclo-php70-
-%endif
-%if "%{scl}" == "rh-php71"
-%global sub_prefix sclo-php71-
-%endif
 %if "%{scl}" == "rh-php72"
 %global sub_prefix sclo-php72-
 %endif
@@ -31,8 +25,8 @@
 
 Summary:        Extended attributes
 Name:           %{?sub_prefix}php-pecl-%{pecl_name}
-Version:        1.3.0
-Release:        4%{?dist}
+Version:        1.4.0
+Release:        1%{?dist}
 License:        PHP
 Group:          Development/Languages
 URL:            http://pecl.php.net/package/%{pecl_name}
@@ -53,18 +47,10 @@ Provides:       %{?scl_prefix}php-pecl-%{pecl_name}          = %{version}-%{rele
 Provides:       %{?scl_prefix}php-pecl-%{pecl_name}%{?_isa}  = %{version}-%{release}
 %endif
 
-%if 0%{?fedora} < 20 && 0%{?rhel} < 7
-# Filter private shared object
-%{?filter_provides_in: %filter_provides_in %{_libdir}/.*\.so$}
-%{?filter_setup}
-%endif
-
 
 %description
 This package allows to manipulate extended attributes on filesystems
 that support them.
-
-Package built for PHP %(%{__php} -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')%{?scl: as Software Collection (%{scl} by %{?scl_vendor}%{!?scl_vendor:rh})}.
 
 
 %prep
@@ -163,6 +149,9 @@ REPORT_EXIT_STATUS=1 \
 
 
 %changelog
+* Fri Apr 24 2020 Remi Collet <remi@remirepo.net> - 1.4.0-1
+- update to 1.4.0
+
 * Mon Oct 28 2019 Remi Collet <remi@remirepo.net> - 1.3.0-4
 - build for sclo-php73
 
